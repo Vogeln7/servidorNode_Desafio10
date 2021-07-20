@@ -21,7 +21,12 @@ routerApp.get('/',(req,res)=>{
 })
 routerApp.get('/productos/vista',(req,res)=>{
     let arrayProductos=producto.productosListados;
-    res.render('productos',{productos:arrayProductos})
+    if(arrayProductos.error){
+        res.render('error',{error:arrayProductos.error})
+    }else{
+        res.render('productos',{productos:arrayProductos})
+    }
+    
 })
 
 routerApp.get('/productos/:id',(req,res)=>{
@@ -32,7 +37,7 @@ routerApp.get('/productos/:id',(req,res)=>{
 routerApp.post('/productos/guardar',(req,res)=>{
     let productoAGuardar=req.body;           
     producto.nuevoProducto(productoAGuardar);        
-    res.redirect('/api/');
+    res.redirect('/api');
 })
 
 routerApp.put('/productos/actualizar/:id',(req,res)=>{
